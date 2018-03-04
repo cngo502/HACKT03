@@ -48,7 +48,9 @@
 					//slider: false,
 					zoom: 5
 				});
-				var url = "https://vharcgis.pro.coil/server/rest/services/TEST_XGZ/MapServer";
+				
+				var url = "https://vharcgis.pro.coil/server/rest/services/TEST_TG/MapServer";
+				//https://vharcgis.pro.coil/server/rest/services/TEST_XGZ/MapServer
 				var dLayer = new ArcGISDynamicMapServiceLayer(url);
 				map.addLayer(dLayer);
 
