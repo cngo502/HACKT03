@@ -1,31 +1,63 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
+	Layout = "~/Views/Shared/_FullScreenLayout.cshtml";
 }
+<link href="~/Content/index.css" rel="stylesheet" />
+<script src="~/Scripts/App/AngularScripts/MainCtrl.js"></script>
+<style>
+	.esriIconFallbackText {
+		display: none
+	}
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+	#HomeButton {
+      position: absolute;
+      top: 95px;
+      left: 20px;
+      z-index: 50;
+    }
+</style>
+<div ng-controller="MainCtrl" ng-cloak style="width:100%;height:100%; display:flex; flex-direction:column;">
+	<div id="menuPanel">
+		<div class="leftMenu" style="display:inline-block; width:100%">
+			<div class="menuBtn btn btn-default tooltip" ng-init="ActivateTool('Supplier')" title="Supplier"
+				 ng-click="ActivateTool('Supplier')"
+				 ng-class="{active:currentTool=='Supplier'}">
+				<img ng-if="currentTool!='Supplier'" src="@Url.Content("~/Content/images/user.png")" class="toolspanelIcon" />
+				<img ng-if="currentTool=='Supplier'" src="@Url.Content("~/Content/images/user_1.png")" class="toolspanelIcon" />
+				<span ng-show="currentTool=='Supplier'">Supplier</span>
+			</div>
+			<div class="menuBtn btn btn-default tooltip" title="User"
+				 ng-click="ActivateTool('User')"
+				 ng-class="{active:currentTool=='User'}">
+				<img ng-if="currentTool!='User'" src="@Url.Content("~/Content/images/supplier.png")" class="toolspanelIcon" />
+				<img ng-if="currentTool=='User'" src="@Url.Content("~/Content/images/supplier_1.png")" class="toolspanelIcon" />
+				<span ng-show="currentTool=='User'">User</span>
+			</div>			
+		</div>
+	</div>
+	<div id="LeftPanel" ng-show="showLeftPanel" style="overflow:hidden;">
+		<div>
+			<span style="position:relative;z-index:9999;float:right;" class="glyphicon glyphicon-remove" aria-hidden="true"
+				  ng-click="showLeftPanel=false;hidePanel();currentTool=null;"></span>
+		</div>
+		<div style="width:100%;height:100%; overflow:auto;" ng-include="leftPanelView"></div>
+	</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+	<div id="RightPanel" style="display:flex; flex-direction:column; overflow: hidden!important" ng-show="showRightPanel">	
+		<div id="HomeButton"></div>	
+		@*<div id="mapID">
+		</div>*@
+	</div>
+	<span kendo-notification="notification" id="notificationID"></span>
+
+	<div ng-show="showLeftPanel" id="sidebar-resizer"
+		 resizer="vertical"
+		 resizer-width="0.2%"
+		 resizer-left="#LeftPanel"
+		 resizer-right="#RightPanel">
+	</div>
+
 </div>
+<script>   
+    var url = {};
+</script>

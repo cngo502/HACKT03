@@ -26,6 +26,13 @@ namespace HACKT03
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
+
+			bundles.Add(new ScriptBundle("~/bundles/angularCtrls").IncludeDirectory("~/Scripts/App/AngularScripts", "*Ctrl.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/appRequired").Include(
+				 "~/Scripts/jquery-{version}.js",
+				 "~/Scripts/kendo/2017.1.223/kendo.all.min.js"
+				));
 		}
 	}
 }
