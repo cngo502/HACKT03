@@ -255,6 +255,7 @@
     <Content Include="Scripts\angular-vs-repeat.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\AngularScripts\AgencyCtrl.js" />
     <Content Include="Scripts\App\AngularScripts\asyncDataCtrl.js" />
     <Content Include="Scripts\App\AngularScripts\asyncServiceCtrl.js" />
     <Content Include="Scripts\App\AngularScripts\MainCtrl.js" />
@@ -328,6 +329,7 @@
     <Content Include="Views\AngularView\Supplier.cshtml" />
     <Content Include="Views\Shared\_FullScreenLayout.cshtml" />
     <Content Include="Views\AngularView\User.cshtml" />
+    <Content Include="Views\AngularView\Agency.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
