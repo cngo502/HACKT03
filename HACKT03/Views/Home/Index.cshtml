@@ -4,6 +4,7 @@
 }
 <link href="~/Content/index.css" rel="stylesheet" />
 <script src="~/Scripts/App/AngularScripts/MainCtrl.js"></script>
+<link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
 <style>
 	.esriIconFallbackText {
 		display: none
@@ -58,6 +59,8 @@
 	</div>
 
 </div>
-<script>   
-    var url = {};
+<script>
+	var url = {};
+	url.getSupplier = '@Url.Action("getsupplier", "supplier")';
+	url.getSupplierLocation = '@Url.Action("getSupplierLocation", "supplier")';
 </script>
