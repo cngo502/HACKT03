@@ -22,17 +22,33 @@
 			<div class="menuBtn btn btn-default tooltip" ng-init="ActivateTool('Supplier')" title="Supplier"
 				 ng-click="ActivateTool('Supplier')"
 				 ng-class="{active:currentTool=='Supplier'}">
-				<img ng-if="currentTool!='Supplier'" src="@Url.Content("~/Content/images/user.png")" class="toolspanelIcon" />
-				<img ng-if="currentTool=='Supplier'" src="@Url.Content("~/Content/images/user_1.png")" class="toolspanelIcon" />
-				<span ng-show="currentTool=='Supplier'">Supplier</span>
+                <div  ng-if="currentTool!='Supplier'">
+                    <img src="@Url.Content("~/Content/images/user.png")" class="toolspanelIcon" /><span style="color: white; margin-right: 10px;">I want to donate </span>
+                </div>
+                <img ng-if="currentTool=='Supplier'" src="@Url.Content("~/Content/images/user_1.png")" class="toolspanelIcon" />
+				<span ng-show="currentTool=='Supplier'">I want to donate</span>
+               
 			</div>
 			<div class="menuBtn btn btn-default tooltip" title="User"
 				 ng-click="ActivateTool('User')"
 				 ng-class="{active:currentTool=='User'}">
-				<img ng-if="currentTool!='User'" src="@Url.Content("~/Content/images/supplier.png")" class="toolspanelIcon" />
+                <div  ng-if="currentTool!='User'" >
+                    <img src="@Url.Content("~/Content/images/supplier.png")" class="toolspanelIcon" />
+                    <span  style="color: white; margin-right: 10px;">I need help!</span>
+                </div>
 				<img ng-if="currentTool=='User'" src="@Url.Content("~/Content/images/supplier_1.png")" class="toolspanelIcon" />
-				<span ng-show="currentTool=='User'">User</span>
+				<span ng-show="currentTool=='User'">I need help!</span>
 			</div>			
+            <div class="menuBtn btn btn-default tooltip" ng-init="ActivateTool('Agency')" title="Agency"
+                 ng-click="ActivateTool('Agency')"
+                 ng-class="{active:currentTool=='Agency'}">
+                <div  ng-if="currentTool!='Agency'" >
+                    <img src="@Url.Content("~/Content/images/user.png")" class="toolspanelIcon" />
+                    <span  style="color: white; margin-right: 10px;">My Agency</span>
+                </div>
+                <img ng-if="currentTool=='Agency'" src="@Url.Content("~/Content/images/user_1.png")" class="toolspanelIcon" />
+                <span ng-show="currentTool=='Agency'">My Agency</span>
+            </div>
 		</div>
 	</div>
 	<div id="LeftPanel" ng-show="showLeftPanel" style="overflow:hidden;">
