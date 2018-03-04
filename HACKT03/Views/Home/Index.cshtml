@@ -40,7 +40,7 @@
 				<img ng-if="currentTool=='User'" src="@Url.Content("~/Content/images/supplier_1.png")" class="toolspanelIcon" />
 				<span ng-show="currentTool=='User'">I need help!</span>
 			</div>			
-            <div class="menuBtn btn btn-default tooltip" ng-init="ActivateTool('Agency')" title="Agency"
+            <div class="menuBtn btn btn-default tooltip" title="Agency"
                  ng-click="ActivateTool('Agency')"
                  ng-class="{active:currentTool=='Agency'}">
                 <div  ng-if="currentTool!='Agency'" >
