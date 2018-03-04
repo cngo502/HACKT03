@@ -200,11 +200,13 @@
     <Compile Include="Controllers\AngularViewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -212,6 +214,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\point.png" />
+    <Content Include="Content\images\supplierLocation.png" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\user_1.png" />
     <Content Include="Content\images\supplier.png" />
@@ -328,6 +332,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\kendo\" />
+    <Folder Include="Views\Supplier\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
