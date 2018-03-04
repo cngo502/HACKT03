@@ -98,20 +98,14 @@
 					//var attr = {"Xcoord":evt.mapPoint.x,"Ycoord":evt.mapPoint.y,"Plant":"Mesa Mint"};
 					//var infoTemplate = new InfoTemplate("Vernal Pool Locations","Latitude: ${Ycoord} Longitude: ${Xcoord}Plant Name:${Plant}");
 					var graphic = new Graphic(geo, symbol);
-					if (searchLayer.graphics.length == 2) {
-						searchLayer.clear();
-						searchLayer.add(graphic);
-						console.log("search graphic layer clear and added is: ", searchLayer, search);
-					}
-					else {
-						searchLayer.add(graphic);
-						console.log("search graphic layer added is: ", searchLayer, search);
-					}
+					searchLayer.add(graphic);
+					console.log("search graphic layer clear and added is: ", searchLayer, search);
 				};
 
 				//$scope.$emit("supplier:getLocation", location);
 				$scope.$on("supplier:getLocation", function (event, args) {
 					console.log("location is: ", args);
+					searchLayer.clear();
 					var locationList = args.split(",");
 					var location = {};
 					////-117.195646, 34.056397
