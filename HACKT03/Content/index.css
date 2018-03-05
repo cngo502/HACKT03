@@ -47,7 +47,7 @@
 		#menuPanel .menuBtn.active {
 			background-color: #efefef;
 			padding: 0 10px;
-			top: 1px;
+			top: 5px;
 			margin-bottom: 1px;
 		}
 	#LeftPanel {

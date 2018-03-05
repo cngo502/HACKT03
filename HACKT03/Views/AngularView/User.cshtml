@@ -1,21 +1,22 @@
 ﻿<div ng-controller="UserCtrl" style="padding:10px; height:100%" ng-cloak>
     <div class="form-inline" style="padding-top:10px">
         <label>We are (a group or organization name)</label><br />
-        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Name of person or organization" />
+        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.organization" placeholder="Name of person or organization" />
     </div>
 	<br />
 
 
     <div class="form-inline" style="padding-top:10px">
         <label>I am located at</label><br />
-        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Enter Location, Address, or Postal Code" />
+        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.location" placeholder="Enter Location, Address, or Postal Code" />
     </div>
 	<br />
 
-    <div class="form-inline" style="padding-top:10px">
-        <label>I need the following item(s)</label>
-        <br />
-		<table style="width:-webkit-fill-available; border: 1px solid black">
+
+	<div class="form-inline" style="padding-top: 10px">
+		<label>I have the following(s) to donate</label>
+		<br />
+		<table style="width:100%; border: 1px solid black">
 			<tr>
 				<th style="width: 20%">
 					&nbsp;
@@ -24,22 +25,22 @@
 				<th style="width: 40%">No. of Item(s)</th>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkFood" /></td>
-				<td>Food (lbs)</td>
-				<td><input type="number" class="numberStyle" value="1" /></td>
+				<td><input type="checkbox" name="chkFood" ng-model="search.items[0].check" /></td>
+				<td><span ng-model="search.items[0].foodName">Food (lbs)</span></td>
+				<td><input type="number" class="numberStyle" value="1" ng-model="search.items[0].numOfItem" /></td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkWater" /></td>
-				<td>Water (casses)</td>
-				<td><input type="number" class="numberStyle" /></td>
+				<td><input type="checkbox" name="chkWater" ng-model="search.items[1].check" /></td>
+				<td><span ng-model="search.items[1].foodName">Water (casses)</span></td>
+				<td><input type="number" class="numberStyle" ng-model="search.items[1].numOfItem" /></td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkBlankets" /></td>
-				<td>Blankets (ea.)</td>
-				<td><input type="number" class="numberStyle" /></td>
+				<td><input type="checkbox" name="chkBlankets" ng-model="search.items[2].check" /></td>
+				<td><span ng-model="search.items[2].foodName">Blankets (ea.)</span></td>
+				<td><input type="number" class="numberStyle" ng-model="search.items[2].numOfItem" /></td>
 			</tr>
 		</table>
-    </div>
+	</div>
 	<br />
 
     <div class="form-inline" style="padding-top:10px">
@@ -48,7 +49,7 @@
 	<br />
 
 	<div class="form-inline" style="padding-top:10px">
-		<button id="searchID" ng-click="searchLocation(searchLocationValue)">Search</button>
+		<button id="searchID" ng-click="searchLocation(search.location)">Search</button>
 		<button>Cancel</button>
 	</div>  
 </div>

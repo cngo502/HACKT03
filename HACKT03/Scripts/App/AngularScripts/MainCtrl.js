@@ -21,6 +21,9 @@
 
 				SendResizeEvent();
 			};
+
+			$scope.ActivateTool('Supplier');
+
 			function SendResizeEvent() {
 				$scope.$broadcast("Global.ResizeUI");
 			};
@@ -50,11 +53,21 @@
 			"esri/layers/GraphicsLayer",
 			"esri/graphic",
 			"esri/dijit/LocateButton",
+
+			"esri/tasks/RouteTask",
+        "esri/tasks/RouteParameters",
+
+        "esri/tasks/FeatureSet",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/symbols/SimpleLineSymbol",
+
 			"dojo/parser",			
 			"dojo/domReady!"
 
 			], function (ArcGISDynamicMapServiceLayer, Map, Search, HomeButton, Font, Point,
-				SpatialReference, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Color, TextSymbol, GraphicsLayer, Graphic, LocateButton) {
+				SpatialReference, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol,
+				Color, TextSymbol, GraphicsLayer, Graphic, LocateButton,
+				RouteTask, RouteParameters,FeatureSet, SimpleMarkerSymbol, SimpleLineSymbol) {
 				var map = new Map("RightPanel", {
 					basemap: "topo",
 					center: [-98, 37.2],
@@ -62,7 +75,7 @@
 					zoom: 5
 				});
 				
-				var url = "https://vharcgis.pro.coil/server/rest/services/TEST_TG/MapServer";
+				var url = "https://vharcgis.pro.coil/server/rest/services/HACKT03_WORLDVILLE/MapServer";
 				var dLayer = new ArcGISDynamicMapServiceLayer(url);
 				map.addLayer(dLayer);
 				var home = new HomeButton({
@@ -108,6 +121,8 @@
 					searchLayer.add(graphic);
 					console.log("search graphic layer is: ", searchLayer, search);
 
+					routeParams.stops.features.push(searchLayer);
+
 					var zoomExtent = esri.graphicsExtent(searchLayer.graphics);
 					console.log("zoom extent is: ", zoomExtent);
 					map.setExtent(zoomExtent,true);
@@ -132,8 +147,11 @@
 					}).then(function successCallback(response) {
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
-
-						
+						routeParams.stops.features.push(searchLayer);
+						if (routeParams.stops.features.length >= 2) {
+							routeTask.solve(routeParams);
+							lastStop = routeParams.stops.features.splice(0, 1)[0];
+						}
 
 					}, function () {
 					});
@@ -166,6 +184,50 @@
 					});
 				});
 
+
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				var map, routeTask, routeParams;
+				var stopSymbol, routeSymbol, lastStop;
+				routeTask = new RouteTask("https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+
+				//setup the route parameters
+				routeParams = new RouteParameters();
+				routeParams.stops = new FeatureSet();
+				routeParams.outSpatialReference = {
+					"wkid": 102100
+				};
+
+				routeTask.on("solve-complete", showRoute);
+				routeTask.on("error", errorHandler);
+
+				//define the symbology used to display the route
+				stopSymbol = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_CROSS).setSize(15);
+				stopSymbol.outline.setWidth(4);
+				routeSymbol = new SimpleLineSymbol().setColor(new dojo.Color([0, 0, 255, 0.5])).setWidth(5);
+
+				//Adds a graphic when the user clicks the map. If 2 or more points exist, route is solved.
+				function addStop(evt) {
+					var stop = map.graphics.add(new Graphic(evt.mapPoint, stopSymbol));
+					routeParams.stops.features.push(stop);
+
+					if (routeParams.stops.features.length >= 2) {
+						routeTask.solve(routeParams);
+						lastStop = routeParams.stops.features.splice(0, 1)[0];
+					}
+				}
+
+				//Adds the solved route to the map as a graphic
+				function showRoute(evt) {
+					map.graphics.add(evt.result.routeResults[0].route.setSymbol(routeSymbol));
+				}
+
+				//Displays any error returned by the Route Task
+				function errorHandler(err) {
+					alert("An error occured\n" + err.message + "\n" + err.details.join("\n"));
+
+					routeParams.stops.features.splice(0, 0, lastStop);
+					map.graphics.remove(routeParams.stops.features.splice(1, 1)[0]);
+				}
 
 				
 			});

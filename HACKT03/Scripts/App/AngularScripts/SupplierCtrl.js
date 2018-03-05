@@ -1,12 +1,17 @@
 ﻿getModule().controller("SupplierCtrl", ["$scope", "dataFactory", "$location", function ($scope, dataFactory, $location) {
 	(function () {
-		$scope.searchLocation = function (input) {
-			var locationList = input.split(",");
+		$scope.searchLocation = function (search) {
+			var locationList = search.location.split(",");
 			var location = {};
 			location.x = Number(locationList[0]);
 			location.y = Number(locationList[1]);
 			$scope.$emit("supplier:getLocation", location);
 		};
+
+		$scope.search = {};
+		$scope.search.items = [];
+
+
 
 		$scope.suppliers = [
 		{
