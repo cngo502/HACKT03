@@ -30,7 +30,7 @@
 	</div>
 
 	<div class="form-inline" style="padding-top:10px;">
-		<button ng-click="currentLocation()">Testing Place</button>
+		<span class="glyphicon glyphicon-arrow-right" style="height:22px;font-size:14px;background-color:antiquewhite" ng-click="currentLocation()">My Current Location</span>
 	</div>
 
     <div class="form-inline"  style="padding-top: 10px" ng-show="!finishSearch">
@@ -65,13 +65,11 @@
 		<button class="btn-default col-sm-6 btn-primary" style="padding:2px" id="searchID" ng-click="searchLocation(search)">Search</button>
 		<button class="col-sm-6 btn-default btn-primary" style="padding:2px" id="clearID" ng-click="clearSearch(search)">Clear</button>
 	</div>
-
-	<div class="form-inline" ng-show="finishSearch">
-		<br />
+	<br />
+	<div class="form-inline" ng-show="finishSearch" style="padding-top:20px">		
 		<span><strong>Place that you can drop it of.</strong></span>
 		<br/>
-		<br />
-		<div class="row supplierDIV" style="border: 1px solid">
+		<div class="row supplierDIV" style="border: 1px solid; padding-top:5px">
 			<span class="col-sm-8"><strong>
 				Name: {{suppliers.name}}
 				<br />
