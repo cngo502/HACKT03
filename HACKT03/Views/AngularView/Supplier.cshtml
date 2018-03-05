@@ -10,7 +10,7 @@
 	<div class="form-inline" style="padding-top: 10px">
 		<label>I am located at</label>
 		<br />    
-		<input class="form-control" onmousedown="myFunction()"  style="width:100%" type="text" id="searchLocationID" ng-model="search.location" placeholder="Enter Location, Address, or Postal Code"/>	
+		<input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.locationString" placeholder="Enter Location, Address, or Postal Code"/>	
 		<input type="search" value="currentLocation" ng-show=""/>	
 	@*<input type="text" name="location" id="ls-location" data-bhw="LocationBarField" autocomplete="off" spellcheck="false" 
 			   maxlength="50" aria-labelledby="placeholderLocation" aria-autocomplete="list" 
@@ -48,17 +48,17 @@
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkFood" ng-model="search.items[0].check"/></td>
-				<td><span ng-model="search.items[0].foodName">Food (lbs)</span></td>
+				<td><span ng-model="search.items[0].product" ng-init="search.items[0].product = 'Food (lbs)'">Food (lbs)</span></td>
 				<td><input type="number" class="numberStyle" value="1" ng-model="search.items[0].numOfItem"/></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkWater" ng-model="search.items[1].check" /></td>
-				<td><span ng-model="search.items[1].foodName">Water (casses)</span></td>
+				<td><span ng-model="search.items[1].product" ng-init="search.items[1].product='Water (casses)'" >Water (casses)</span></td>
 				<td><input type="number" class="numberStyle" ng-model="search.items[1].numOfItem" /></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkBlankets"  ng-model="search.items[2].check" /></td>
-				<td><span ng-model="search.items[2].foodName">Blankets (ea.)</span></td>
+				<td><span ng-model="search.items[2].product" ng-init="search.items[2].product = 'Blankets (ea.)'" >Blankets (ea.)</span></td>
 				<td><input type="number" class="numberStyle" ng-model="search.items[2].numOfItem"  /></td>
 			</tr>
 		</table>

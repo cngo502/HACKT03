@@ -121,7 +121,7 @@
 					searchLayer.add(graphic);
 					console.log("search graphic layer is: ", searchLayer, search);
 
-					routeParams.stops.features.push(searchLayer);
+					//routeParams.stops.features.push(searchLayer);
 
 					var zoomExtent = esri.graphicsExtent(searchLayer.graphics);
 					console.log("zoom extent is: ", zoomExtent);
@@ -129,29 +129,29 @@
 				};
 
 				//$scope.$emit("supplier:getLocation", location);
-				$scope.$on("supplier:getLocation", function (event, location) {
-					console.log("location is: ", location);
+				$scope.$on("supplier:getLocation", function (event, search) {
+					console.log("location is: ", search.location);
 					searchLayer.clear();
 					
-					doSearchGeo(location, 'content/images/point.png');
+					doSearchGeo(search.location, 'content/images/point.png');
 
 
 					$http({
 						method: 'POST',
 						url: "supplier/getSupplierLocation",
 						//data: $scope.cal,
-						data: 'currentLocation=' + encodeURIComponent(JSON.stringify(location)),
+						data: 'search=' + encodeURIComponent(JSON.stringify(search)),
 						headers: {
 							'Content-Type': 'application/x-www-form-urlencoded'
 						},
 					}).then(function successCallback(response) {
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
-						routeParams.stops.features.push(searchLayer);
-						if (routeParams.stops.features.length >= 2) {
-							routeTask.solve(routeParams);
-							lastStop = routeParams.stops.features.splice(0, 1)[0];
-						}
+						//routeParams.stops.features.push(searchLayer);
+						//if (routeParams.stops.features.length >= 2) {
+						//	routeTask.solve(routeParams);
+						//	lastStop = routeParams.stops.features.splice(0, 1)[0];
+						//}
 
 					}, function () {
 					});
@@ -186,48 +186,48 @@
 
 
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				var map, routeTask, routeParams;
-				var stopSymbol, routeSymbol, lastStop;
-				routeTask = new RouteTask("https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+				//var map, routeTask, routeParams;
+				//var stopSymbol, routeSymbol, lastStop;
+				//routeTask = new RouteTask("https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
 
-				//setup the route parameters
-				routeParams = new RouteParameters();
-				routeParams.stops = new FeatureSet();
-				routeParams.outSpatialReference = {
-					"wkid": 102100
-				};
+				////setup the route parameters
+				//routeParams = new RouteParameters();
+				//routeParams.stops = new FeatureSet();
+				//routeParams.outSpatialReference = {
+				//	"wkid": 102100
+				//};
 
-				routeTask.on("solve-complete", showRoute);
-				routeTask.on("error", errorHandler);
+				//routeTask.on("solve-complete", showRoute);
+				//routeTask.on("error", errorHandler);
 
-				//define the symbology used to display the route
-				stopSymbol = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_CROSS).setSize(15);
-				stopSymbol.outline.setWidth(4);
-				routeSymbol = new SimpleLineSymbol().setColor(new dojo.Color([0, 0, 255, 0.5])).setWidth(5);
+				////define the symbology used to display the route
+				//stopSymbol = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_CROSS).setSize(15);
+				//stopSymbol.outline.setWidth(4);
+				//routeSymbol = new SimpleLineSymbol().setColor(new dojo.Color([0, 0, 255, 0.5])).setWidth(5);
 
-				//Adds a graphic when the user clicks the map. If 2 or more points exist, route is solved.
-				function addStop(evt) {
-					var stop = map.graphics.add(new Graphic(evt.mapPoint, stopSymbol));
-					routeParams.stops.features.push(stop);
+				////Adds a graphic when the user clicks the map. If 2 or more points exist, route is solved.
+				//function addStop(evt) {
+				//	var stop = map.graphics.add(new Graphic(evt.mapPoint, stopSymbol));
+				//	routeParams.stops.features.push(stop);
 
-					if (routeParams.stops.features.length >= 2) {
-						routeTask.solve(routeParams);
-						lastStop = routeParams.stops.features.splice(0, 1)[0];
-					}
-				}
+				//	if (routeParams.stops.features.length >= 2) {
+				//		routeTask.solve(routeParams);
+				//		lastStop = routeParams.stops.features.splice(0, 1)[0];
+				//	}
+				//}
 
-				//Adds the solved route to the map as a graphic
-				function showRoute(evt) {
-					map.graphics.add(evt.result.routeResults[0].route.setSymbol(routeSymbol));
-				}
+				////Adds the solved route to the map as a graphic
+				//function showRoute(evt) {
+				//	map.graphics.add(evt.result.routeResults[0].route.setSymbol(routeSymbol));
+				//}
 
-				//Displays any error returned by the Route Task
-				function errorHandler(err) {
-					alert("An error occured\n" + err.message + "\n" + err.details.join("\n"));
+				////Displays any error returned by the Route Task
+				//function errorHandler(err) {
+				//	alert("An error occured\n" + err.message + "\n" + err.details.join("\n"));
 
-					routeParams.stops.features.splice(0, 0, lastStop);
-					map.graphics.remove(routeParams.stops.features.splice(1, 1)[0]);
-				}
+				//	routeParams.stops.features.splice(0, 0, lastStop);
+				//	map.graphics.remove(routeParams.stops.features.splice(1, 1)[0]);
+				//}
 
 				
 			});

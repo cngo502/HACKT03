@@ -5,17 +5,23 @@ using System.Web;
 
 namespace HACKT03.Models
 {
-    public class LocationClass
-    {
-        public double x { get; set; }
-        public double y { get; set; }
-        public string Name { get; set; }
-        public List<ProductItems> Items { get; set; }
+	public class SearchClass
+	{
+		public LocationClass location { get; set; }
+		public string organization { get; set; }
+		public List<Supplier> items { get; set; }
 	}
 
-    public class ProductItems
-    {
-        public string productType { get; set; }
-        public int Amount { get; set; }
-    }
+	public class Supplier
+	{
+		public bool check { get; set; }
+		public string product { get; set; }
+		public int numOfItem { get; set; }
+	}
+	public class LocationClass
+	{
+		public double x { get; set; }
+		public double y { get; set; }
+
+	}
 }
