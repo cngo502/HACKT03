@@ -29,8 +29,10 @@
 			</div>*@
 	</div>
 
-	<div class="form-inline" style="padding-top:10px;">
-		<span class="glyphicon glyphicon-arrow-right" style="height:22px;font-size:14px;background-color:antiquewhite" ng-click="currentLocation()">My Current Location</span>
+	<div class="form-inline">
+		<span style="color: blue" ng-click="currentLocation()">
+
+			<img src="~/Content/images/current.png" style="width:20px; vertical-align: text-bottom" />	Use Current Location</span>
 	</div>
 
     <div class="form-inline"  style="padding-top: 10px" ng-show="!finishSearch">
@@ -45,17 +47,17 @@
 				<th style="width: 40%">No. of Item(s)</th>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkFood" ng-model="search.items[0].check"/></td>
+				<td style="padding-left:15px"><input type="checkbox" name="chkFood" ng-model="search.items[0].check"/></td>
 				<td><span ng-model="search.items[0].product" ng-init="search.items[0].productType = 'Food (lbs)'">Food (lbs)</span></td>
 				<td><input type="number" class="numberStyle" value="1" ng-model="search.items[0].amount"/></td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkWater" ng-model="search.items[1].check" /></td>
+				<td style="padding-left:15px"><input type="checkbox" name="chkWater" ng-model="search.items[1].check" /></td>
 				<td><span ng-model="search.items[1].product" ng-init="search.items[1].productType='Water (casses)'" >Water (casses)</span></td>
 				<td><input type="number" class="numberStyle" ng-model="search.items[1].amount" /></td>
 			</tr>
 			<tr>
-				<td><input type="checkbox" name="chkBlankets"  ng-model="search.items[2].check" /></td>
+				<td style="padding-left:15px"><input type="checkbox" name="chkBlankets"  ng-model="search.items[2].check" /></td>
 				<td><span ng-model="search.items[2].product" ng-init="search.items[2].productType = 'Blankets (ea.)'" >Blankets (ea.)</span></td>
 				<td><input type="number" class="numberStyle" ng-model="search.items[2].amount"  /></td>
 			</tr>
