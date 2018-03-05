@@ -38,6 +38,7 @@
 			};
 
 			require([
+				 "dojo/dom",
 			"esri/layers/ArcGISDynamicMapServiceLayer",
 			"esri/map",
 			"esri/dijit/Search",
@@ -55,25 +56,35 @@
 			"esri/dijit/LocateButton",
 
 			"esri/tasks/RouteTask",
-        "esri/tasks/RouteParameters",
+			"esri/tasks/RouteParameters",
 
-        "esri/tasks/FeatureSet",
-        "esri/symbols/SimpleMarkerSymbol",
-        "esri/symbols/SimpleLineSymbol",
-
+			"esri/tasks/FeatureSet",
+			"esri/symbols/SimpleMarkerSymbol",
+			"esri/symbols/SimpleLineSymbol",
+			"dijit/registry",
+			"esri/urlUtils",
+			"esri/dijit/Measurement",
 			"dojo/parser",			
 			"dojo/domReady!"
 
-			], function (ArcGISDynamicMapServiceLayer, Map, Search, HomeButton, Font, Point,
+			], function (dom,ArcGISDynamicMapServiceLayer, Map, Search, HomeButton, Font, Point,
 				SpatialReference, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol,
 				Color, TextSymbol, GraphicsLayer, Graphic, LocateButton,
-				RouteTask, RouteParameters,FeatureSet, SimpleMarkerSymbol, SimpleLineSymbol) {
+				RouteTask, RouteParameters, FeatureSet, SimpleMarkerSymbol, SimpleLineSymbol, registry, urlUtils, Measurement) {
+
+				urlUtils.addProxyRule({
+					urlPrefix: "route.arcgis.com",
+					proxyUrl: "/sproxy/"
+				});
+
 				var map = new Map("RightPanel", {
 					basemap: "topo",
 					center: [-98, 37.2],
 					//slider: false,
 					zoom: 5
 				});
+
+				//map.on("click", addStop);
 				
 				var url = "https://vharcgis.pro.coil/server/rest/services/HACKT03_WORLDVILLE/MapServer";
 				var dLayer = new ArcGISDynamicMapServiceLayer(url);
@@ -93,6 +104,11 @@
 				}, "");
 
 				search.startup();
+
+				//var measurement = new Measurement({
+				//	map: map
+				//}, dom.byId("measurementID"));
+				//measurement.startup();
 
 				//var geoLocate = new LocateButton({
 				//	map: map
@@ -121,21 +137,20 @@
 					searchLayer.add(graphic);
 					console.log("search graphic layer is: ", searchLayer, search);
 
-					routeParams.stops.features.push(searchLayer);
-
 					var zoomExtent = esri.graphicsExtent(searchLayer.graphics);
 					console.log("zoom extent is: ", zoomExtent);
-					map.setExtent(zoomExtent,true);
+					map.setExtent(zoomExtent, true);
+
+					var stop = map.graphics.add(graphic);
+					console.log("stop point is: ", stop);
+					routeParams.stops.features.push(stop);
 				};
 
 				//$scope.$emit("supplier:getLocation", location);
 				$scope.$on("supplier:getLocation", function (event, search) {
 					console.log("location is: ", search.location);
-					searchLayer.clear();
-					
+					searchLayer.clear();					
 					doSearchGeo(search.location, 'content/images/point.png');
-
-
 					$http({
 						method: 'POST',
 						url: "supplier/getSupplierLocation",
@@ -148,16 +163,30 @@
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
 						//routeParams.stops.features.push(searchLayer);
-						//console.log("routeParams is: ", routeParams);
-						//if (routeParams.stops.features.length >= 2) {
-						//	routeTask.solve(routeParams);
-						//	lastStop = routeParams.stops.features.splice(0, 1)[0];
-						//}
+						console.log("routeParams is: ", routeParams);
+						if (routeParams.stops.features.length >= 2) {
+							console.log("routeParams.stops.features is: ", routeParams.stops.features);
+							routeTask.solve(routeParams);
+							lastStop = routeParams.stops.features.splice(0, 1)[0];
+							routeParams.stops.features = [];
+						}
+
+						$scope.$broadcast("supplier:returnSuppliers", response.data);
 
 					}, function () {
 					});
 
 				});
+
+				//$scope.$emit("supplier:getDirection", supplier);
+				$scope.$on("supplier:getDirection", function (event, args) {
+					if (routeParams.stops.features.length >= 2) {
+						console.log("routeParams.stops.features is: ", routeParams.stops.features);
+						routeTask.solve(routeParams);
+						lastStop = routeParams.stops.features.splice(0, 1)[0];
+					}
+				});
+
 
 				$scope.$on("user:getLocation", function (event, search) {
 					console.log("user location is: ", search);
@@ -192,7 +221,8 @@
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				var routeTask, routeParams;
 				var stopSymbol, routeSymbol, lastStop;
-				routeTask = new RouteTask("https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+				//routeTask = new RouteTask("https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");
+				var routeTask = new RouteTask("https://vharcgis.pro.coil/portal/sharing/servers/72f35d922678482a9378c53c20b79dab/rest/services/World/Route/NAServer/Route_World");
 
 				//setup the route parameters
 				routeParams = new RouteParameters();
@@ -209,16 +239,17 @@
 				stopSymbol.outline.setWidth(4);
 				routeSymbol = new SimpleLineSymbol().setColor(new dojo.Color([0, 0, 255, 0.5])).setWidth(5);
 
-				////Adds a graphic when the user clicks the map. If 2 or more points exist, route is solved.
-				//function addStop(evt) {
-				//	var stop = map.graphics.add(new Graphic(evt.mapPoint, stopSymbol));
-				//	routeParams.stops.features.push(stop);
+				//Adds a graphic when the user clicks the map. If 2 or more points exist, route is solved.
+				function addStop(evt) {
+					var stop = map.graphics.add(new Graphic(evt.mapPoint, stopSymbol));
+					console.log("stop point is: ", stop);
+					routeParams.stops.features.push(stop);
 
-				//	if (routeParams.stops.features.length >= 2) {
-				//		routeTask.solve(routeParams);
-				//		lastStop = routeParams.stops.features.splice(0, 1)[0];
-				//	}
-				//}
+					if (routeParams.stops.features.length >= 2) {
+						routeTask.solve(routeParams);
+						lastStop = routeParams.stops.features.splice(0, 1)[0];
+					}
+				}
 
 				//Adds the solved route to the map as a graphic
 				function showRoute(evt) {
@@ -254,10 +285,6 @@
 					console.log("get width: ", args);
 					$scope.shareData.width.width = args.width;
 					$scope.shareData.width.left = args.left;
-				});
-
-
-				
-
+				});				
 			}());
 		}]);

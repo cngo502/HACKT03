@@ -48,7 +48,7 @@
                 </div>
                 <img ng-if="currentTool=='Agency'" src="@Url.Content("~/Content/images/agency_1.png")" class="toolspanelIcon" />
                 <span ng-show="currentTool=='Agency'">My Agency</span>
-            </div>
+            </div>			
 		</div>
 	</div>
 	<div id="LeftPanel" ng-show="showLeftPanel" style="overflow:hidden;">
@@ -61,6 +61,7 @@
 
 	<div id="RightPanel" style="display:flex; flex-direction:column; overflow: hidden!important" ng-show="showRightPanel">	
 		<div id="HomeButton"></div>	
+		@*<div id="measurementID" style="float:right">Test</div>*@	
 		@*<div id="mapID">
 		</div>*@
 	</div>

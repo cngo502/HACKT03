@@ -29,14 +29,11 @@
 			</div>*@
 	</div>
 
-	<br />
-
 	<div class="form-inline" style="padding-top:10px;">
 		<button ng-click="currentLocation()">Testing Place</button>
 	</div>
-	<br />
 
-    <div class="form-inline"  style="padding-top: 10px">
+    <div class="form-inline"  style="padding-top: 10px" ng-show="!finishSearch">
         <label>I have the following(s) to donate</label>
         <br />
 		<table style="width:100%; border: 1px solid black">
@@ -64,21 +61,28 @@
 			</tr>
 		</table>
     </div>
-	<br />
-
 	<div class="form-inline"  style="padding-top: 10px">
 		<button id="searchID" ng-click="searchLocation(search)">Search</button>
+		<button id="searchID" ng-click="clearSearch(search)">Clear</button>
 	</div>
 
-	@*<br />
+	<div class="form-inline" ng-show="finishSearch">
 		<br />
-		<div class="row">
-			<span style="padding-left:15px"><strong>List of places you can drop it of</strong></span>
-			<table class="table" show-filter="true" style="width: inherit; margin-bottom: 20px; margin-left: 10px; margin-right: 10px;">
-				<tr ng-repeat="x in suppliers track by $index">
-					<td title="Name">{{ x.Name }}</td>
-					<td title="Address">{{ x.Address }}</td>
-				</tr>
-			</table>
-		</div>*@
+		<span><strong>Place that you can drop it of.</strong></span>
+		<br/>
+		<br />
+		<div class="row supplierDIV" style="border: 1px solid">
+			<span class="col-sm-8"><strong>{{suppliers.name}}    Location({{suppliers.x}}, {{suppliers.y}})</strong>
+				<img src="~/Content/images/direction.png" ng-click="getDirection(suppliers)" title="Get Direction"/>
+			</span>
+			<img class="col-sm-4" src="~/Content/images/donationplace_01.jpg"/>
+		</div>
+		
+		@*<span style="padding-left:15px"><strong>List of places you can drop it of</strong></span>
+		<table class="table" show-filter="true" style="width: inherit; margin-bottom: 20px; margin-left: 10px; margin-right: 10px;">
+			<tr ng-repeat="x in suppliers track by $index">
+				<td title="Name">{{ x.name }}</td>				
+			</tr>
+		</table>*@
+	</div>
 </div>

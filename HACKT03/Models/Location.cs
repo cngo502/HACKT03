@@ -23,6 +23,7 @@ namespace HACKT03.Models
 	{
 		public double x { get; set; }
 		public double y { get; set; }
+		public string name { get; set; }
 
 	}
 }

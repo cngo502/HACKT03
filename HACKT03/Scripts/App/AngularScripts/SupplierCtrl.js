@@ -24,11 +24,7 @@
 
 	
 
-		$scope.suppliers = [
-		{
-			"Name": "Suger Land",
-			"Address": "2619 Highway 6, Houston, Tx, 77084"
-		}];
+		$scope.suppliers = [];
 
 		
 		$scope.currentLocation = function () {
@@ -38,55 +34,33 @@
 			$scope.search.locationString = String(location.x) + "," + String(location.y);			
 		};
 
-		function myFunction() { };
-
-		function setGridGridOption() {
-			var grid = $("#supplierGridID").data("kendoGrid");			
-			$scope.GridGridOptions = {
-				dataSource: {
-					schema: {
-						data: "data",
-						total: "total",
-						groups: "groups"
-					},
-					transport: {
-						read: {
-							url: url.getSupplier,
-							type: "POST",							
-						},
-						parameterMap: function (options, type) {
-							return options;
-						}
-					},
-					//batch:true,
-					pageSize: 40,
-					serverGrouping: true,
-					serverPaging: true,
-					serverFiltering: true,
-					serverSorting: true,
-					requestEnd: function (e) {
-					},
-
-				},				
-				columns: ["NAME"],				
-				pageable: true,
-				resizable: true,
-				filterable: true,
-			};
-
-			if (grid) {
-				//console.log("set options of grid", grid, $scope.GridGridOptions);
-				grid.setOptions($scope.GridGridOptions);				
-			}
+		$scope.getDirection = function (supplier) {
+			console.log("supplier is: ", supplier);
+			$scope.$emit("supplier:getDirection", supplier);
 		};
 
-		setGridGridOption();
+		function myFunction() { };
+
+		$scope.clearSearch = function (search) {
+			search = {};
+			search.items = [];
+			$scope.finishSearch = false;
+
+		};
+
 		$scope.$on("Global.ResizeUI", function (event, args) {
 			setTimeout(function () {			
 			}, 100);
 		});
 		$scope.$on("main:currentLocation", function (event, args) {
 			console.log("current locaiton is: ", args);
+		});
+
+		//$scope.$broadcast("supplier:returnSuppliers", response.data);
+		$scope.$on("supplier:returnSuppliers", function (event, args) {
+			console.log("returnSuppliers is: ", args);
+			$scope.finishSearch = true;
+			$scope.suppliers = args;
 		});
 	}())
 

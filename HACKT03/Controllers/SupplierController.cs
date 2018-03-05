@@ -77,7 +77,9 @@ namespace HACKT03.Controllers
                 {
                     supplier.x = double.Parse(myReader["LON"].ToString());
                     supplier.y = double.Parse(myReader["LAT"].ToString());
-                }
+					supplier.name = myReader["FACILITYNAME"]?.ToString();
+
+				}
             }
             finally
             {
