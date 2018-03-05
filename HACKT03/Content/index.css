@@ -7,8 +7,8 @@
 	}
 	#menuPanel {
 		
-        /*background-color: #231F20;*/
-        background-image: linear-gradient(white, black 20%);
+        background-color: #000;
+        /*background-image: linear-gradient(white, black 20%);*/
 		width: 100%;
 		/*height: 45px;*/
 		display: block;

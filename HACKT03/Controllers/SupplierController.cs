@@ -19,7 +19,11 @@ namespace HACKT03.Controllers
 			LocationClass supplier = new LocationClass();
 			LocationClass current = JsonConvert.DeserializeObject<LocationClass>(currentLocation);
 
+            //Insert record
 
+            //Get Neerest Center
+
+            //Return it
 			supplier.x = -95.4805;
 			supplier.y = 29;
 			var data = Content(JsonConvert.SerializeObject(supplier), "application/json", System.Text.Encoding.UTF8);
