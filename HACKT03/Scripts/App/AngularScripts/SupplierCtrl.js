@@ -1,6 +1,24 @@
-﻿getModule().controller("SupplierCtrl", ["$scope", "dataFactory", function ($scope, dataFactory) {
+﻿getModule().controller("SupplierCtrl", ["$scope", "dataFactory", "$location", function ($scope, dataFactory, $location) {
 	(function () {
-		$scope.searchLocation = function (location) {
+		$scope.searchLocation = function (input) {
+			var locationList = input.split(",");
+			var location = {};
+			location.x = Number(locationList[0]);
+			location.y = Number(locationList[1]);
+			$scope.$emit("supplier:getLocation", location);
+		};
+
+		$scope.suppliers = [
+		{
+			"Name": "Suger Land",
+			"Address": "2619 Highway 6, Houston, Tx, 77084"
+		}];
+
+		
+		$scope.currentLocation = function () {
+			var location = {};
+			location.x = -95.600887;
+			location.y = 29.633012;
 			$scope.$emit("supplier:getLocation", location);
 		};
 
@@ -48,6 +66,9 @@
 		$scope.$on("Global.ResizeUI", function (event, args) {
 			setTimeout(function () {			
 			}, 100);
+		});
+		$scope.$on("main:currentLocation", function (event, args) {
+			console.log("current locaiton is: ", args);
 		});
 	}())
 

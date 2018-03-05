@@ -1,18 +1,35 @@
 ﻿<div ng-controller="SupplierCtrl" style="padding:10px; height:100%" ng-cloak>
-	<div class="row" >
+	<div class="row">
 		<label class="col-sm-4">Location: </label>
 		<input class="form-control col-sm-8"  style="width:inherit" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="lon,lat"/>
+		
 	</div>
-	<button id="searchID" ng-click="searchLocation(searchLocationValue)">Search</button>
+	<div class="row" style="padding-top:10px; padding-left:15px">
+		<button id="searchID" ng-click="searchLocation(searchLocationValue)">Search</button>
+		<button ng-click="currentLocation()">Testing Place</button>
+	</div>
+	
+	<br />
+	<br />
+	<div class="row">
+		<span style="padding-left:15px"><strong>List of places you can drop it of</strong></span>
+		<table class="table" show-filter="true" style="width: inherit; margin-bottom: 20px; margin-left: 10px; margin-right: 10px;">
+			<tr ng-repeat="x in suppliers track by $index">
+				<td title="Name">{{ x.Name }}</td>
+				<td title="Address">{{ x.Address }}</td>
+			</tr>
+		</table>
+	</div>
+	@*//I am located here:
+
+	//I have the following items to donate
+
+
+	//Find Drp off location
+
+
+	//Result, Here is the list of places you can drop it off.  Or (schedule someone to pick it up)*@
+
 </div>
 
-//I am located here:
-
-    //I have the following items to donate
-
-
-    //Find Drp off location
-
-
-    //Result, Here is the list of places you can drop it off.  Or (schedule someone to pick it up)
 
