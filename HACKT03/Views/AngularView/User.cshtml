@@ -1,15 +1,48 @@
 ﻿<div ng-controller="UserCtrl" style="padding:10px; height:100%" ng-cloak>
-	User
+    <div class="row">
+        <label>We are (a group or organization name)</label><br />
+        <input class="form-control col-sm-8" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Name of person or organization" />
+    </div>
 
-    //Name 
-
-    //I am located here
-
-    //I Need the following items 
-
-    //Button
-
-    //The following items can be picked up now 
-
+    <div class="row">
+        <label>I am located at</label><br />
+        <input class="form-control col-sm-8" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Enter Location, Address, or Postal Code" />
+    </div>
+    <div class="row" style="width:100%">
+        <label>I need the following item(s)</label>
+        <br />
+        <div>
+            <table stylye="width: 100%; border: 1px solid black">
+                <tr>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>Goods</th>
+                    <th>No. of Item(s)</th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="chkFood" /></td>
+                    <td>Food (lbs)</td>
+                    <td><input type="number" class="numberStyle" value="1" /></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="chkWater" /></td>
+                    <td>Water (casses)</td>
+                    <td><input type="number" class="numberStyle" /></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="chkBlankets" /></td>
+                    <td>Blankets (ea.)</td>
+                    <td><input type="number" class="numberStyle" /></td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+    <div class="row">
+        <input type="checkbox" /> I can pick up from multiple locations. 
+    </div>
+    <button id="searchID" ng-click="searchLocation(searchLocationValue)">Search</button>
+    <button>Cancel</button>
 </div>
 
