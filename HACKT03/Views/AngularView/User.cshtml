@@ -1,17 +1,22 @@
 ﻿<div ng-controller="UserCtrl" style="padding:10px; height:100%" ng-cloak>
-    <div class="form-inline" style="padding-top:10px">
-        <label>We are (a group or organization name)</label><br />
-        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.organization" placeholder="Name of person or organization" />
-    </div>
+	<div class="form-inline" style="padding-top: 10px">
+		<label>We are (a group or organization name)</label>
+		<br />
+		<input class="form-control" style="width:100%" type="text" id="organizationID" ng-model="search.name" placeholder="Name of person or organization" />
+	</div>
+	<div class="form-inline" style="padding-top: 10px">
+		<label>I am located at</label>
+		<br />
+		<input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.locationString" placeholder="Enter Location, Address, or Postal Code" />
+		<input type="search" value="currentLocation" ng-show="" />		
+	</div>
+
 	<br />
 
-
-    <div class="form-inline" style="padding-top:10px">
-        <label>I am located at</label><br />
-        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="search.location" placeholder="Enter Location, Address, or Postal Code" />
-    </div>
+	<div class="form-inline" style="padding-top:10px;">
+		<button ng-click="currentLocation()">Testing Place</button>
+	</div>
 	<br />
-
 
 	<div class="form-inline" style="padding-top: 10px">
 		<label>I have the following(s) to donate</label>
@@ -26,30 +31,30 @@
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkFood" ng-model="search.items[0].check" /></td>
-				<td><span ng-model="search.items[0].foodName">Food (lbs)</span></td>
-				<td><input type="number" class="numberStyle" value="1" ng-model="search.items[0].numOfItem" /></td>
+				<td><span ng-model="search.items[0].product" ng-init="search.items[0].productType = 'Food (lbs)'">Food (lbs)</span></td>
+				<td><input type="number" class="numberStyle" value="1" ng-model="search.items[0].amount" /></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkWater" ng-model="search.items[1].check" /></td>
-				<td><span ng-model="search.items[1].foodName">Water (casses)</span></td>
-				<td><input type="number" class="numberStyle" ng-model="search.items[1].numOfItem" /></td>
+				<td><span ng-model="search.items[1].product" ng-init="search.items[1].productType='Water (casses)'">Water (casses)</span></td>
+				<td><input type="number" class="numberStyle" ng-model="search.items[1].amount" /></td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="chkBlankets" ng-model="search.items[2].check" /></td>
-				<td><span ng-model="search.items[2].foodName">Blankets (ea.)</span></td>
-				<td><input type="number" class="numberStyle" ng-model="search.items[2].numOfItem" /></td>
+				<td><span ng-model="search.items[2].product" ng-init="search.items[2].productType = 'Blankets (ea.)'">Blankets (ea.)</span></td>
+				<td><input type="number" class="numberStyle" ng-model="search.items[2].amount" /></td>
 			</tr>
 		</table>
 	</div>
 	<br />
 
     <div class="form-inline" style="padding-top:10px">
-        <input type="checkbox" /> I can pick up from multiple locations. 
+        <input type="checkbox" ng-model="search.pickupcheck" /> I can pick up from multiple locations. 
     </div>
 	<br />
 
 	<div class="form-inline" style="padding-top:10px">
-		<button id="searchID" ng-click="searchLocation(search.location)">Search</button>
+		<button id="searchID" ng-click="searchLocation(search)">Search</button>
 		<button>Cancel</button>
 	</div>  
 </div>

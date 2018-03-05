@@ -14,14 +14,11 @@ namespace HACKT03.Controllers
 		private static string _ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver}; SERVER=VHHAL20264; PORT=3306;" +
 													"DATABASE=hack03; USER=HACKT03; PASSWORD=gfZhA7dQ; OPTION=0;";
 
-		public ActionResult getUserNeedHelpLocation(string currentLocation)
+		public ActionResult getUserNeedHelpLocation(string search)
 		{
 			LocationClass supplier = new LocationClass();
-			LocationClass current = JsonConvert.DeserializeObject<LocationClass>(currentLocation);
+			SearchClass current = JsonConvert.DeserializeObject<SearchClass>(search);
 
-
-			supplier.x = -116;
-			supplier.y = 38;
 			var data = Content(JsonConvert.SerializeObject(supplier), "application/json", System.Text.Encoding.UTF8);
 			return data;
 		}

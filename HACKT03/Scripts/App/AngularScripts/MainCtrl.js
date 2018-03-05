@@ -148,39 +148,42 @@
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
 						//routeParams.stops.features.push(searchLayer);
-						console.log("routeParams is: ", routeParams);
-						if (routeParams.stops.features.length >= 2) {
-							routeTask.solve(routeParams);
-							lastStop = routeParams.stops.features.splice(0, 1)[0];
-						}
+						//console.log("routeParams is: ", routeParams);
+						//if (routeParams.stops.features.length >= 2) {
+						//	routeTask.solve(routeParams);
+						//	lastStop = routeParams.stops.features.splice(0, 1)[0];
+						//}
 
 					}, function () {
 					});
 
 				});
 
-				$scope.$on("user:getLocation", function (event, args) {
-					console.log("location is: ", args);
+				$scope.$on("user:getLocation", function (event, search) {
+					console.log("user location is: ", search);
 					searchLayer.clear();
-					var locationList = args.split(",");
-					var location = {};
-					////-117.195646, 34.056397
-					location.x = Number(locationList[0]);
-					location.y = Number(locationList[1]);
-					doSearchGeo(location, 'content/images/point.png');
+
+					doSearchGeo(search.location, 'content/images/point.png');
 
 
 					$http({
 						method: 'POST',
 						url: "userNeedHelp/getUserNeedHelpLocation",
 						//data: $scope.cal,
-						data: 'currentLocation=' + encodeURIComponent(JSON.stringify(location)),
+						data: 'search=' + encodeURIComponent(JSON.stringify(search)),
 						headers: {
 							'Content-Type': 'application/x-www-form-urlencoded'
 						},
 					}).then(function successCallback(response) {
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
+						//routeParams.stops.features.push(searchLayer);
+						//console.log("routeParams is: ", routeParams);
+						//if (routeParams.stops.features.length >= 2) {
+						//	routeTask.solve(routeParams);
+						//	lastStop = routeParams.stops.features.splice(0, 1)[0];
+						//}
+
 					}, function () {
 					});
 				});

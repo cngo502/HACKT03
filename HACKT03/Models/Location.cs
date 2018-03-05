@@ -10,6 +10,7 @@ namespace HACKT03.Models
 		public LocationClass location { get; set; }
 		public string name { get; set; }
 		public List<ProductItems> items { get; set; }
+		public bool pickupcheck { get; set; }
 	}
 
 	public class ProductItems
