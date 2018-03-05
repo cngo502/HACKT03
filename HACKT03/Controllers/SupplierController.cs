@@ -11,21 +11,89 @@ namespace HACKT03.Controllers
 {
     public class SupplierController : Controller
     {
-		private static string _ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver}; SERVER=VHHAL20264; PORT=3306;" + 
-													"DATABASE=hack03; USER=HACKT03; PASSWORD=gfZhA7dQ; OPTION=0;";
 
-		public ActionResult getSupplierLocation(string currentLocation)
+        public ActionResult getSupplierLocation(string currentLocation)
 		{
 			LocationClass supplier = new LocationClass();
 			LocationClass current = JsonConvert.DeserializeObject<LocationClass>(currentLocation);
 
+
+
+
+
+
+            current.Name = "XGZ";
+
+            current.Items = new List<ProductItems>() { new ProductItems() { Amount = 1126, productType = "WATER" } }; 
+
             //Insert record
 
-            //Get Neerest Center
+            OdbcConnection OdbcConn =
+                            new OdbcConnection("Dsn=VHHAL202;uid=HACKT03;pwd=gfZhA7dQ");
+
+            OdbcCommand myCommand = new OdbcCommand();
+            myCommand.Connection = OdbcConn;
+            OdbcConn.Open();
+
+            string sqlGetUser = "select id as userid from \"HACKT03\".\"USERS\" where NAME = '" + current.Name + "'";
+            myCommand.CommandText = sqlGetUser;
+            string id = ""; 
+            var reader = myCommand.ExecuteReader();
+            if (reader.Read())
+            {
+                //we hvae an existing record
+                id = reader["userid"].ToString();
+                reader.Close();
+
+            }
+            else
+            {
+                reader.Close();
+                //Insert user 
+                string sqlInsert = $"insert into \"HACKT03\".\"USERS\" values(id_seq.NEXTVAL, '{current.Name}', '', NEW ST_Point('Point ({current.x} {current.y})', 4326))";
+                myCommand.CommandText = sqlInsert;
+                myCommand.ExecuteNonQuery();
+
+                sqlGetUser = "select id as userid from \"HACKT03\".\"USERS\" where NAME = '" + current.Name + "'";
+                myCommand.CommandText = sqlGetUser;
+                reader = myCommand.ExecuteReader(); 
+                if (reader.Read())
+                {
+                    //we hvae an existing record
+                    id = reader["userid"].ToString();
+                }
+                reader.Close(); 
+            }
+
+            foreach (var item in current.Items)
+            {
+                myCommand.CommandText = $"INSERT INTO \"HACKT03\".\"TRANSACTIONS\" VALUES(id_seq_trans.NEXTVAL, {id}, 'DROP' , '{item.productType}', {item.Amount}, 'Finished', '')";
+                myCommand.ExecuteNonQuery(); 
+            }
+
+
+            string sql = "SELECT TOP 1 * FROM (select A.NAME AS \"USERNAME\",B.ID AS \"FACILITYID\", B.NAME AS \"FACILITYNAME\" , B.LOCATION.ST_X() AS \"LON\", B.LOCATION.ST_Y() AS \"LAT\", A.LOCATION.ST_Distance(B.LOCATION, 'meter') AS \"DISTANCE\" from \"HACKT03\".\"USERS\" A, \"HACKT03\".\"FACILITIES\" B  where A.NAME = '" + current.Name + "') TEMP ORDER BY DISTANCE";
+            myCommand.CommandText = sql;
+            OdbcDataReader myReader = myCommand.ExecuteReader();
+            try
+            {
+
+                //Get Neerest Center
+                while (myReader.Read())
+                {
+                    supplier.x = double.Parse(myReader["LON"].ToString());
+                    supplier.y = double.Parse(myReader["LAT"].ToString());
+                }
+            }
+            finally
+            {
+                myReader.Close();
+                OdbcConn.Close();
+            }
 
             //Return it
-			supplier.x = -95.4805;
-			supplier.y = 29;
+//            supplier.x = -95.4805;
+//			supplier.y = 29;
 			var data = Content(JsonConvert.SerializeObject(supplier), "application/json", System.Text.Encoding.UTF8);
 			return data;
 		}
@@ -36,7 +104,7 @@ namespace HACKT03.Controllers
         {
 			string sql = "select * from members";
 			List<Dictionary<string, string>> returnDatas = new List<Dictionary<string, string>>();
-			OdbcConnection myConnection = new OdbcConnection(_ConnectionString);
+			OdbcConnection myConnection = new OdbcConnection("");
 			OdbcCommand myCommand = new OdbcCommand(sql, myConnection);
 			myConnection.Open();
 			OdbcDataReader myReader = myCommand.ExecuteReader();
