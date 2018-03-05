@@ -221,6 +221,8 @@
     <Content Include="Content\images\donationplace_00.jpg" />
     <Content Include="Content\images\donationplace_01.jpg" />
     <Content Include="Content\images\point.png" />
+    <Content Include="Content\images\saper1.png" />
+    <Content Include="Content\images\saper2.jpg" />
     <Content Include="Content\images\supplierLocation.png" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\user_1.png" />

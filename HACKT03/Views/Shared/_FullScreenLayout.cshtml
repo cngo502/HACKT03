@@ -45,7 +45,7 @@
 		}
 
 		.navbar-inverse .navbar-brand {
-			margin-left: 15px !important;
+			/*margin-left: 15px !important;*/
 			color: black !important;
 		}
 
@@ -97,7 +97,8 @@
 	<div class="navbar navbar-inverse navbar-fixed-top" style="background-color:white; border-color: white;">
 		<div class="container row" style="float:left; display: inline-flex; width: 100%;">
 			<div class="navbar-header col-sm-5" style="display:flex; float:left">
-				<a href="@Url.Action("index","home")" class="navbar-title">				
+				<a href="@Url.Action("index","home")" class="navbar-title">
+					<img src="~/Content/images/saper1.png" style="width:50px;padding-top: 10px;" />				
 				</a>
 				@Html.ActionLink("ShareVille", "Index", "Home", null, new { @class = "navbar-brand" }) 
                 <br />
