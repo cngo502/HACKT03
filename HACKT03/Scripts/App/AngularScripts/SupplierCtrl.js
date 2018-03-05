@@ -1,17 +1,28 @@
 ﻿getModule().controller("SupplierCtrl", ["$scope", "dataFactory", "$location", function ($scope, dataFactory, $location) {
 	(function () {
-		$scope.searchLocation = function (search) {
-			var locationList = search.location.split(",");
-			var location = {};
-			location.x = Number(locationList[0]);
-			location.y = Number(locationList[1]);
-			$scope.$emit("supplier:getLocation", location);
-		};
 
 		$scope.search = {};
 		$scope.search.items = [];
 
+		$scope.searchLocation = function (search) {
+			console.log("search model is: ", search);
+			if (search.locationString != undefined) {
+				var locationList = search.locationString.split(",");
+				var location = {};
+				location.x = Number(locationList[0]);
+				location.y = Number(locationList[1]);
+				search.location = location;
+				if (locationList.length >= 2) {
+					$scope.$emit("supplier:getLocation", search);
+				}
+				else {
+					alert("Please enter location.");
+				}
+			}
+			
+		};
 
+	
 
 		$scope.suppliers = [
 		{
@@ -24,8 +35,10 @@
 			var location = {};
 			location.x = -95.600887;
 			location.y = 29.633012;
-			$scope.$emit("supplier:getLocation", location);
+			$scope.search.locationString = String(location.x) + "," + String(location.y);			
 		};
+
+		function myFunction() { };
 
 		function setGridGridOption() {
 			var grid = $("#supplierGridID").data("kendoGrid");			

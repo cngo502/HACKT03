@@ -14,10 +14,10 @@ namespace HACKT03.Controllers
 		private static string _ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver}; SERVER=VHHAL20264; PORT=3306;" + 
 													"DATABASE=hack03; USER=HACKT03; PASSWORD=gfZhA7dQ; OPTION=0;";
 
-		public ActionResult getSupplierLocation(string currentLocation)
+		public ActionResult getSupplierLocation(string search)
 		{
 			LocationClass supplier = new LocationClass();
-			LocationClass current = JsonConvert.DeserializeObject<LocationClass>(currentLocation);
+			SearchClass currentSearch = JsonConvert.DeserializeObject<SearchClass>(search);
 
             //Insert record
 
