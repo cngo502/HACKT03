@@ -22,6 +22,10 @@
 
 		};
 
+		$scope.formatNumber = function (i) {
+			return Math.round(i * 100) / 100;
+		};
+
 		$scope.currentLocation = function () {
 			var location = {};
 			location.x = -95.600887;

@@ -39,6 +39,10 @@
 			$scope.$emit("supplier:getDirection", supplier);
 		};
 
+		$scope.formatNumber = function (i) {
+			return Math.round(i * 100) / 100;
+		};
+
 		function myFunction() { };
 
 		$scope.clearSearch = function (search) {

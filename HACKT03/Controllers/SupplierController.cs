@@ -75,7 +75,7 @@ namespace HACKT03.Controllers
                     supplier.x = double.Parse(myReader["LON"].ToString());
                     supplier.y = double.Parse(myReader["LAT"].ToString());
 					supplier.name = myReader["FACILITYNAME"]?.ToString();
-					supplier.distance = double.Parse(myReader["DISTANCE"].ToString());
+					supplier.distance = Math.Round(0.000621371 * double.Parse(myReader["DISTANCE"].ToString()), 2);
 
 				}
             }
