@@ -1,13 +1,17 @@
 ﻿<div ng-controller="UserCtrl" style="padding:10px; height:100%" ng-cloak>
     <div class="form-inline" style="padding-top:10px">
         <label>We are (a group or organization name)</label><br />
-        <input class="form-control col-sm-8" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Name of person or organization" />
+        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Name of person or organization" />
     </div>
+	<br />
+
 
     <div class="form-inline" style="padding-top:10px">
         <label>I am located at</label><br />
-        <input class="form-control col-sm-8" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Enter Location, Address, or Postal Code" />
+        <input class="form-control" style="width:100%" type="text" id="searchLocationID" ng-model="searchLocationValue" placeholder="Enter Location, Address, or Postal Code" />
     </div>
+	<br />
+
     <div class="form-inline" style="padding-top:10px">
         <label>I need the following item(s)</label>
         <br />
@@ -36,9 +40,13 @@
 			</tr>
 		</table>
     </div>
+	<br />
+
     <div class="form-inline" style="padding-top:10px">
         <input type="checkbox" /> I can pick up from multiple locations. 
     </div>
+	<br />
+
 	<div class="form-inline" style="padding-top:10px">
 		<button id="searchID" ng-click="searchLocation(searchLocationValue)">Search</button>
 		<button>Cancel</button>
