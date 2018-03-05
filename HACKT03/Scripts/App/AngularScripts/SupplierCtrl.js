@@ -42,8 +42,8 @@
 		function myFunction() { };
 
 		$scope.clearSearch = function (search) {
-			search = {};
-			search.items = [];
+			$scope.search = {};
+			$scope.search.items = [];
 			$scope.finishSearch = false;
 
 		};

@@ -148,8 +148,13 @@
 
 				//$scope.$emit("supplier:getLocation", location);
 				$scope.$on("supplier:getLocation", function (event, search) {
-					console.log("location is: ", search.location);
-					searchLayer.clear();					
+					searchLayer.clear();
+					if (map.graphics != null) {
+						map.graphics.clear();
+					}					
+					routeParams.stops.features = [];
+					console.log("graphics  is: ", map.graphics, searchLayer);
+
 					doSearchGeo(search.location, 'content/images/point.png');
 					$http({
 						method: 'POST',
@@ -160,15 +165,12 @@
 							'Content-Type': 'application/x-www-form-urlencoded'
 						},
 					}).then(function successCallback(response) {
-						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
-						//routeParams.stops.features.push(searchLayer);
 						console.log("routeParams is: ", routeParams);
 						if (routeParams.stops.features.length >= 2) {
-							console.log("routeParams.stops.features is: ", routeParams.stops.features);
 							routeTask.solve(routeParams);
 							lastStop = routeParams.stops.features.splice(0, 1)[0];
-							routeParams.stops.features = [];
+							console.log("routeParams.stops.features is: ", routeParams.stops.features, lastStop);
 						}
 
 						$scope.$broadcast("supplier:returnSuppliers", response.data);
@@ -180,6 +182,17 @@
 
 				//$scope.$emit("supplier:getDirection", supplier);
 				$scope.$on("supplier:getDirection", function (event, args) {
+					console.log("supplier args and routeParams are: ", args, routeParams);
+
+					if (routeParams.stops.features.length >= 2) {
+						console.log("routeParams.stops.features is: ", routeParams.stops.features);
+						routeTask.solve(routeParams);
+						lastStop = routeParams.stops.features.splice(0, 1)[0];
+					}
+				});
+
+				$scope.$on("user:getDirection", function (event, args) {
+					console.log("args and routeParams are: ", args, routeParams);
 					if (routeParams.stops.features.length >= 2) {
 						console.log("routeParams.stops.features is: ", routeParams.stops.features);
 						routeTask.solve(routeParams);
@@ -188,10 +201,14 @@
 				});
 
 
+
 				$scope.$on("user:getLocation", function (event, search) {
 					console.log("user location is: ", search);
 					searchLayer.clear();
-
+					if (map.graphics != null) {
+						map.graphics.clear();
+					}
+					routeParams.stops.features = [];
 					doSearchGeo(search.location, 'content/images/point.png');
 
 
@@ -206,12 +223,13 @@
 					}).then(function successCallback(response) {
 						console.log("location is: ", response);
 						doSearchGeo(response.data, 'content/images/supplierlocation.png');
-						//routeParams.stops.features.push(searchLayer);
-						//console.log("routeParams is: ", routeParams);
-						//if (routeParams.stops.features.length >= 2) {
-						//	routeTask.solve(routeParams);
-						//	lastStop = routeParams.stops.features.splice(0, 1)[0];
-						//}
+						
+						console.log("routeParams is: ", routeParams);
+						if (routeParams.stops.features.length >= 2) {
+							routeTask.solve(routeParams);
+							lastStop = routeParams.stops.features.splice(0, 1)[0];
+						}
+						$scope.$broadcast("user:returnSuppliers", response.data);
 
 					}, function () {
 					});
@@ -255,6 +273,7 @@
 				function showRoute(evt) {
 					console.log("showRoute is: ", evt);
 					map.graphics.add(evt.result.routeResults[0].route.setSymbol(routeSymbol));
+
 				}
 
 				//Displays any error returned by the Route Task

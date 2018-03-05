@@ -11,9 +11,6 @@ namespace HACKT03.Controllers
 {
     public class SupplierController : Controller
     {
-		private static string _ConnectionString = "DRIVER={MySQL ODBC 3.51 Driver}; SERVER=VHHAL20264; PORT=3306;" + 
-													"DATABASE=hack03; USER=HACKT03; PASSWORD=gfZhA7dQ; OPTION=0;";
-
 		public ActionResult getSupplierLocation(string search)
 		{
 			LocationClass supplier = new LocationClass();
@@ -78,6 +75,7 @@ namespace HACKT03.Controllers
                     supplier.x = double.Parse(myReader["LON"].ToString());
                     supplier.y = double.Parse(myReader["LAT"].ToString());
 					supplier.name = myReader["FACILITYNAME"]?.ToString();
+					supplier.distance = double.Parse(myReader["DISTANCE"].ToString());
 
 				}
             }

@@ -72,8 +72,17 @@
 		<br/>
 		<br />
 		<div class="row supplierDIV" style="border: 1px solid">
-			<span class="col-sm-8"><strong>{{suppliers.name}}    Location({{suppliers.x}}, {{suppliers.y}})</strong>
-				<img src="~/Content/images/direction.png" ng-click="getDirection(suppliers)" title="Get Direction"/>
+			<span class="col-sm-8"><strong>
+				Name: {{suppliers.name}}
+				<br />
+				Location: {{suppliers.x}}, {{suppliers.y}}
+				<br />
+				Miles: {{suppliers.distance}}
+
+				<br />
+				<a ng-click="getDirection(suppliers)" title="Get Direction">Get Direction</a>
+				<label>Time: 3 minutes </label>
+			</strong>
 			</span>
 			<img class="col-sm-4" src="~/Content/images/donationplace_01.jpg"/>
 		</div>

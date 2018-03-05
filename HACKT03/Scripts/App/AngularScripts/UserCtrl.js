@@ -29,10 +29,34 @@
 			$scope.search.locationString = String(location.x) + "," + String(location.y);
 		};
 
+		$scope.getDirection = function (supplier) {
+			console.log("user is: ", supplier);
+			$scope.$emit("user:getDirection", supplier);
+		};
+
+		$scope.clearSearch = function (search) {
+			$scope.search = {};
+			$scope.search.items = [];
+			$scope.finishSearch = false;
+
+		};
+
 		$scope.$on("Global.ResizeUI", function (event, args) {
 			setTimeout(function () {
 			}, 100);
 		});
+
+		//$scope.$broadcast("supplier:returnSuppliers", response.data);
+		$scope.$on("user:returnSuppliers", function (event, args) {
+			console.log("returnSuppliers is: ", args);
+			$scope.finishSearch = true;
+			var results = [];
+			results.push(args);
+			results.push(args);
+
+			$scope.suppliers = results;
+		});
+
 	}())
 
 }]);
